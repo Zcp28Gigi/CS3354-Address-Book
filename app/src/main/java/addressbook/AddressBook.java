@@ -9,27 +9,38 @@ public class AddressBook {
         contacts = new ArrayList<>();
     }
 
-    // Add
     public void addContact(Contact contact) {
         contacts.add(contact);
     }
 
-    // Delete
     public void deleteContact(int index) {
         if (index >= 0 && index < contacts.size()) {
             contacts.remove(index);
         }
     }
 
-    // Update
     public void updateContact(int index, Contact newContact) {
         if (index >= 0 && index < contacts.size()) {
             contacts.set(index, newContact);
         }
     }
 
-    // Get all
     public ArrayList<Contact> getContacts() {
         return contacts;
+    }
+
+    // search
+    public Contact findByName(String name) {
+        for (Contact c : contacts) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    // delete by name
+    public void deleteByName(String name) {
+        contacts.removeIf(c -> c.getName().equalsIgnoreCase(name));
     }
 }

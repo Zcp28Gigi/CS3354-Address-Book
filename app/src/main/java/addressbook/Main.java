@@ -5,9 +5,14 @@ public class Main {
         AddressBook book = new AddressBook();
 
         book.addContact(new Contact("John", "123456", "john@email.com"));
+        book.addContact(new Contact("Alice", "999", "alice@email.com"));
 
-        for (Contact c : book.getContacts()) {
-            System.out.println(c);
-        }
+        System.out.println(book.findByName("Alice"));
+
+        book.deleteByName("John");
+
+        book.getContacts().forEach(System.out::println);
     }
+
+
 }
