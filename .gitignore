@@ -1,8 +1,9 @@
-# Build folders
+# Gradle
+.gradle/
 build/
-bin/
 
 # Compiled files
+bin/
 *.class
 
 # VS Code
