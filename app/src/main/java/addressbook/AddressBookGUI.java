@@ -2,6 +2,7 @@ package addressbook;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class AddressBookGUI {
     private AddressBook addressBook;
@@ -13,7 +14,12 @@ public class AddressBookGUI {
     private JTextField emailField;
 
     public AddressBookGUI() {
-        addressBook = new AddressBook();
+        try {
+            addressBook = new AddressBook("contacts.txt");
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            System.exit(1);
+        }
 
         JFrame frame = new JFrame("Address Book");
         frame.setSize(500, 400);
@@ -58,7 +64,11 @@ public class AddressBookGUI {
             String email = emailField.getText();
 
             Contact c = new Contact(name, phone, email);
-            addressBook.addContact(c);
+            try {
+                addressBook.addContact(c);
+            } catch (FileNotFoundException fileNotFound) {
+                JOptionPane.showMessageDialog(frame, "Error writing to file.");
+            }
 
             refreshList();
             clearFields();
@@ -73,7 +83,11 @@ public class AddressBookGUI {
                 String email = emailField.getText();
 
                 Contact updatedContact = new Contact(name, phone, email);
-                addressBook.updateContact(index, updatedContact);
+                try {
+                    addressBook.updateContact(index, updatedContact);
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(frame, "Error writing to file.");
+                }
 
                 refreshList();
                 clearFields();
@@ -86,7 +100,11 @@ public class AddressBookGUI {
             int index = contactList.getSelectedIndex();
 
             if (index != -1) {
-                addressBook.deleteContact(index);
+                try {
+                    addressBook.deleteContact(index);
+                } catch (FileNotFoundException fileNotFound) {
+                    JOptionPane.showMessageDialog(frame, "Error writing to file.");
+                }
                 refreshList();
                 clearFields();
             } else {
