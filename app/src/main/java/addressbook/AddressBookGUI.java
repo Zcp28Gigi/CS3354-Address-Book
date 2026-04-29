@@ -16,8 +16,8 @@ public class AddressBookGUI {
     public AddressBookGUI() {
         try {
             addressBook = new AddressBook("contacts.txt");
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (FileNotFoundException fileNotFound) {
+            JOptionPane.showMessageDialog(null, fileNotFound.getMessage());
             System.exit(1);
         }
 
@@ -85,8 +85,8 @@ public class AddressBookGUI {
                 Contact updatedContact = new Contact(name, phone, email);
                 try {
                     addressBook.updateContact(index, updatedContact);
-                } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(frame, "Error writing to file.");
+                } catch (FileNotFoundException fileNotFound) {
+                    JOptionPane.showMessageDialog(frame, fileNotFound.getMessage());
                 }
 
                 refreshList();
@@ -103,7 +103,7 @@ public class AddressBookGUI {
                 try {
                     addressBook.deleteContact(index);
                 } catch (FileNotFoundException fileNotFound) {
-                    JOptionPane.showMessageDialog(frame, "Error writing to file.");
+                    JOptionPane.showMessageDialog(frame, fileNotFound.getMessage());
                 }
                 refreshList();
                 clearFields();
@@ -124,6 +124,7 @@ public class AddressBookGUI {
         });
 
         frame.setVisible(true);
+        this.refreshList();
     }
 
     private void refreshList() {
